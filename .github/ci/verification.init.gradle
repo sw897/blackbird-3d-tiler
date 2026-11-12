@@ -1,0 +1,11 @@
+// These modules have portable tests without the default tag, plus a texture
+// regression tagged release. Include them without enabling data-driven tiler tests.
+gradle.projectsEvaluated {
+    rootProject.subprojects.findAll { it.name in ['mago-common', 'mago-io'] }.each { module ->
+        module.tasks.named('test', org.gradle.api.tasks.testing.Test) {
+            useJUnitPlatform {
+                setIncludeTags([] as Set)
+            }
+        }
+    }
+}
