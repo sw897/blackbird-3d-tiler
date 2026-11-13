@@ -76,17 +76,18 @@ services:
 
 ### Execute mago 3DTiler with Java
 You can also run mago 3DTiler directly using the jar file.   
-Download the latest `mago-3d-tiler.jar` file from the releases page or build it from the source code.  
+Download `blackbird-3d-tiler-<version>.jar` from the artifacts of a successful [Blackbird CI run](https://github.com/sw897/blackbird-3d-tiler/actions/workflows/blackbird-ci.yml), or build it from source. Replace `x.x.x` in the examples with the downloaded version.
+
 Currently, **JDK 21** is required.
 
 ```
-java -jar mago-3d-tiler.jar --input "/data/input/sample" --output "/data/output/sample"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/data/input/sample" --output "/data/output/sample"
 ```
 
 or using short options
 
 ```
-java -jar mago-3d-tiler.jar -i "/data/input/sample" -o "/data/output/sample"
+java -jar blackbird-3d-tiler-x.x.x.jar -i "/data/input/sample" -o "/data/output/sample"
 ```
 
 ### JVM memory tuning
@@ -95,19 +96,19 @@ mago 3DTiler can require a large Java heap for large meshes, point clouds, CityG
 For large jobs, start the jar with an explicit heap size:
 
 ```bash
-java -Xms4g -Xmx16g -jar mago-3d-tiler.jar --input "/data/input/sample" --output "/data/output/sample"
+java -Xms4g -Xmx16g -jar blackbird-3d-tiler-x.x.x.jar --input "/data/input/sample" --output "/data/output/sample"
 ```
 
 Recommended JVM options:
 
 ```bash
-java -Xms4g -Xmx16g -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+UseStringDeduplication -Dfile.encoding=UTF-8 -Djava.awt.headless=true -jar mago-3d-tiler.jar --input "/data/input/sample" --output "/data/output/sample"
+java -Xms4g -Xmx16g -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+UseStringDeduplication -Dfile.encoding=UTF-8 -Djava.awt.headless=true -jar blackbird-3d-tiler-x.x.x.jar --input "/data/input/sample" --output "/data/output/sample"
 ```
 
 You can also size the heap as a percentage of available memory instead of a fixed value:
 
 ```bash
-java -XX:InitialRAMPercentage=12.5 -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+UseStringDeduplication -Dfile.encoding=UTF-8 -Djava.awt.headless=true -jar mago-3d-tiler.jar --input "/data/input/sample" --output "/data/output/sample"
+java -XX:InitialRAMPercentage=12.5 -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+UseStringDeduplication -Dfile.encoding=UTF-8 -Djava.awt.headless=true -jar blackbird-3d-tiler-x.x.x.jar --input "/data/input/sample" --output "/data/output/sample"
 ```
 
 Use `-Xmx16g` only on machines with enough free RAM. On a 32GB machine, 16GB heap is usually reasonable if no other heavy process is running. For troubleshooting out-of-memory failures, add:
@@ -268,18 +269,18 @@ Can be used to convert common data.
 Except for point cloud data, if you do not enter an outputType, it will be generated as b3dm.
 
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/kml_with_collada" --output "/output_path/kml_with_collada"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/kml_with_collada" --output "/output_path/kml_with_collada"
 ```
 
 ### DEM elevation application case
 This is the case of putting 3D data on the terrain height of a single channel such as GeoTIFF.
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/sample" --output "/output_path/sample" --terrain "/input_path/sample/terrain.tif"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/sample" --output "/output_path/sample" --terrain "/input_path/sample/terrain.tif"
 ```
 
 multiple terrain files case :
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/sample" --output "/output_path/sample" --terrain "/input_path/sample/terrain_dir"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/sample" --output "/output_path/sample" --terrain "/input_path/sample/terrain_dir"
 ```
 
 ### Geoid Height Correction
@@ -287,14 +288,14 @@ Use `--geoid` when input heights are referenced to a geoid model and should be c
 
 Built-in geoid models:
 ```bash
-java -jar mago-3d-tiler.jar --input "/input_path/sample" --output "/output_path/sample" --geoid EGM84
-java -jar mago-3d-tiler.jar --input "/input_path/sample" --output "/output_path/sample" --geoid EGM96
-java -jar mago-3d-tiler.jar --input "/input_path/sample" --output "/output_path/sample" --geoid EGM2008
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/sample" --output "/output_path/sample" --geoid EGM84
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/sample" --output "/output_path/sample" --geoid EGM96
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/sample" --output "/output_path/sample" --geoid EGM2008
 ```
 
 Custom GeoTIFF geoid file or directory:
 ```bash
-java -jar mago-3d-tiler.jar --input "/input_path/sample" --output "/output_path/sample" --geoid "/input_path/geoid/custom-geoid.tif"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/sample" --output "/output_path/sample" --geoid "/input_path/geoid/custom-geoid.tif"
 ```
 
 ### Converting 3D data with an applied coordinate system
@@ -303,14 +304,14 @@ The example below is a sample of converting 3ds (3D MAX) data. It converts to th
 In this case, we have entered the EPSG:5186 coordinate system.
 
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/3ds" --inputType "3ds" --output "/output_path/3ds" --crs "5186"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/3ds" --inputType "3ds" --output "/output_path/3ds" --crs "5186"
 ```
 
 ### Converting 3D data with curvature correction
 When converting 3D data with a wide range, you may need to apply earth curvature correction.
 In this case, you can apply curvature correction by adding the `--curvatureCorrection` option.
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/kml_with_collada" --inputType "obj" --output "/output_path/kml_with_collada" --crs "5186" --curvatureCorrection
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/kml_with_collada" --inputType "obj" --output "/output_path/kml_with_collada" --crs "5186" --curvatureCorrection
 ```
 
 ---
@@ -323,7 +324,7 @@ When converting instance model data, the following options are available for con
 (kml with collada) data, and the `outputType` option is required in the current version.
 
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/i3dm" --output "/output_path/i3dm" --outputType "i3dm"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/i3dm" --output "/output_path/i3dm" --outputType "i3dm"
 ```
 
 ### Converting i3dm data to Shape
@@ -332,7 +333,7 @@ To converting i3dm as a Shape file with Point geometry type, you can convert it 
 You need to specify `inputType` as shp and specify the path to the instance file through the 'instance' option.
 
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/i3dm" --output "/output_path/i3dm" --inputType "shp" --outputType "i3dm" --instance "/input_path/instance.gltf"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/i3dm" --output "/output_path/i3dm" --inputType "shp" --outputType "i3dm" --instance "/input_path/instance.gltf"
 ```
 
 ---
@@ -344,28 +345,28 @@ The extrusion height can be specified to reference a customized attribute name u
 Similarly, the extrusion start height defaults to 0, and the height of the base plane can be specified via `--altitudeColumn <arg>`.
 
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/shp" --inputType "shp" --output "/output_path/shp" --crs "5186"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/shp" --inputType "shp" --output "/output_path/shp" --crs "5186"
 ```
 or
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/shp" --inputType "shp" --output "/output_path/shp" --crs "5186" --heightColumn "height"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/shp" --inputType "shp" --output "/output_path/shp" --crs "5186" --heightColumn "height"
 ```
 
 ### Converting 2D GIS Polyline Data
 Convert polyline data to pipe. Polyline data with a z-axis can be converted via the `diameter` property.
 The default dimension for a pipe in mago 3DTiler is diameter and The length is in millimeters (mm)
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/shp" --inputType "shp" --output "/output_path/shp" --crs "5186"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/shp" --inputType "shp" --output "/output_path/shp" --crs "5186"
 ```
 or
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/shp" --inputType "shp" --output "/output_path/shp" --crs "5186" --diameterColumn "diameter"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/shp" --inputType "shp" --output "/output_path/shp" --crs "5186" --diameterColumn "diameter"
 ```
 
 ### Converting 2D GIS Point Data
 When converting point data, you can convert it to i3dm by specifying the instance model through the `--instance <arg>` option.
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/geopackage" --inputType "gpkg" --output "/output_path/geopackage" --crs "5186" --outputType "i3dm" --instance "instance.glb"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/geopackage" --inputType "gpkg" --output "/output_path/geopackage" --crs "5186" --outputType "i3dm" --instance "instance.glb"
 ```
 
 ## Point-Clouds Data Conversion Cases
@@ -376,11 +377,11 @@ When converting point-clouds data, the following default options are available f
 If the input data is "las", the `--outputType` will automatically be `pnts`.
 
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/las" --inputType "las" --output "/output_path/las"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/las" --inputType "las" --output "/output_path/las"
 ```
 or
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/las" --inputType "las" --output "/output_path/las" --outputType "pnts"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/las" --inputType "las" --output "/output_path/las" --outputType "pnts"
 ```
 
 ## Special Conversion Cases
@@ -388,35 +389,35 @@ java -jar mago-3d-tiler.jar --input "/input_path/las" --inputType "las" --output
 ### Up-Axis Swap Example
 mago3dTiler converts mesh z-up axis data to y-up axis. If your original data is y-up axis, you will need to add the `--rotateXAxis <degree>` option to avoid converting it.
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/y-up-fbx" --inputType "fbx" --output "/output_path/y-up-fbx" --rotateXAxis "90"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/y-up-fbx" --inputType "fbx" --output "/output_path/y-up-fbx" --rotateXAxis "90"
 ```
 
 ### Translating Data to Origin
 When converting data that is not located at the origin, you can use the `--xOffset`, `--yOffset`, and `--zOffset` options to translate it to the origin.
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/translated-model" --inputType "gltf" --output "/output_path/translated-model" --zOffset "50.0" --crs "5186"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/translated-model" --inputType "gltf" --output "/output_path/translated-model" --zOffset "50.0" --crs "5186"
 ```
 
 ### Converting CityGML
 When converting CityGML, it is recommended to set `--inputType citygml`.
 CityGML data can have different extensions, such as `.xml` and `.gml`.
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/citygml" --inputType "citygml" --output "/output_path/citygml" --crs "5186"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/citygml" --inputType "citygml" --output "/output_path/citygml" --crs "5186"
 ```
 
 ### Photogrammetry Tiling
 When converting photogrammetry data, use `--photogrammetry` to enable the experimental compatibility-focused pipeline. This pipeline makes broader use of CPU processing and includes performance and visual-quality improvements.
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/photogrammetry" --output "/output_path/photogrammetry" --inputType "obj" --outputType "b3dm" --crs "5186" --photogrammetry
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/photogrammetry" --output "/output_path/photogrammetry" --inputType "obj" --outputType "b3dm" --crs "5186" --photogrammetry
 ```
 The `--outputType "b3dm"` option can be omitted as below.
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/photogrammetry" --output "/output_path/photogrammetry" --inputType "obj" --crs "5186" --photogrammetry
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/photogrammetry" --output "/output_path/photogrammetry" --inputType "obj" --crs "5186" --photogrammetry
 ```
 
 ### Converting Large Point-Clouds Data
 When converting large point-clouds, you can use the `--pointRatio` option to adjust the percentage of conversion points from the source data as follows.
 In the example below, 25% of the points are converted.
 ```
-java -jar mago-3d-tiler.jar --input "/input_path/las" --inputType "las" --output "/output_path/las" --pointRatio "25"
+java -jar blackbird-3d-tiler-x.x.x.jar --input "/input_path/las" --inputType "las" --output "/output_path/las" --pointRatio "25"
 ```

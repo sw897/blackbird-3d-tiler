@@ -29,10 +29,11 @@ download the mago-3d-tiler jar file or use the Docker image to get started quick
 
 ### Using the Jar File
 You can easily run mago 3dTiler using the jar file.   
+Download this fork's JAR from the artifacts of a successful [Blackbird CI run](https://github.com/sw897/blackbird-3d-tiler/actions/workflows/blackbird-ci.yml). The filename is `blackbird-3d-tiler-<version>.jar`; replace `x.x.x` below with the downloaded version.
 > ⚠️ **Requires JDK 21**
 
 ```
-java -jar mago-3d-tiler-x.x.x.jar -input C:\data\kml-input-dir -output C:\data\kml-output-dir
+java -jar blackbird-3d-tiler-x.x.x.jar -input C:\data\kml-input-dir -output C:\data\kml-output-dir
 ```
 
 ### Using Docker Image
@@ -53,18 +54,19 @@ clone the repository and use Gradle to build the project.
 
 cloning the repository:
 ```git
-git clone https://github.com/Gaia3D/mago-3d-tiler.git
+git clone https://github.com/sw897/blackbird-3d-tiler.git
 ```
 then navigate to the project directory and run:
-```gradle
-gradle jar
+```bash
+./gradlew --no-daemon --console=plain --init-script .github/ci/verification.init.gradle clean build
 ```
+The executable JAR is written to `mago-tiler/dist/blackbird-3d-tiler-<version>.jar`.
 
 ###### The Java version used in the release is OpenJDK 21
 
 ## Example help command
 ```bash
-java -jar mago-3d-tiler.jar --help
+java -jar blackbird-3d-tiler-x.x.x.jar --help
 ```
 console output:
 ```
