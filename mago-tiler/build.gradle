@@ -5,6 +5,8 @@ plugins {
     id "com.github.jk1.dependency-license-report" version "3.1.4"
 }
 
+def executableJarName = "blackbird-3d-tiler-${project.version}.jar"
+
 dependencies {
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
     implementation "org.lwjgl:lwjgl"
@@ -127,7 +129,7 @@ shadowJar {
     }
     from sourceSets.main.runtimeClasspath
     configurations = [project.configurations.runtimeClasspath]
-    archiveFileName = "mago-3d-tiler-${project.version}.jar"
+    archiveFileName = executableJarName
     doFirst {
         def distDir = file("${projectDir}/dist")
         if (distDir.exists()) {
@@ -181,7 +183,7 @@ jib {
                 "-XX:MaxGCPauseMillis=100",
                 "-XX:+UseStringDeduplication",
         ]
-        entrypoint = ["java", "-jar", "/app/mago-3d-tiler-${project.version}.jar"]
+        entrypoint = ["java", "-jar", "/app/${executableJarName}"]
     }
     extraDirectories {
         paths {
@@ -205,7 +207,7 @@ compileJava {
 tasks.named("jib") {
     dependsOn(shadowJar)
     onlyIf {
-        def jarFile = layout.buildDirectory.file("../dist/mago-3d-tiler-${project.version}.jar").get().asFile
+        def jarFile = file("dist/${executableJarName}")
         if (!jarFile.exists()) {
             logger.lifecycle("⚠️ JAR file not found: ${jarFile.absolutePath}")
             logger.lifecycle(" > Please build the project first.")

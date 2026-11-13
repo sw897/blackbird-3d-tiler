@@ -30,7 +30,7 @@ class JarBuildTest {
         File input = new File(classLoader.getResource("./sample-3ds").getFile());
         File output = new File(classLoader.getResource("./sample-output").getFile());
 
-        // java -jar mago-3d-tiler-x.x.x.jar --input ./sample-3ds --output ./sample-output
+        // java -jar blackbird-3d-tiler-x.x.x.jar --input ./sample-3ds --output ./sample-output
         List<String> argList = new ArrayList<>();
         argList.add("java");
         argList.add("-jar");
@@ -50,7 +50,7 @@ class JarBuildTest {
         File input = new File(classLoader.getResource("./sample-kml").getFile());
         File output = new File(classLoader.getResource("./sample-output").getFile());
 
-        // java -jar mago-3d-tiler-x.x.x.jar --input ./sample-kml --output ./sample-output
+        // java -jar blackbird-3d-tiler-x.x.x.jar --input ./sample-kml --output ./sample-output
         List<String> argList = new ArrayList<>();
         argList.add("java");
         argList.add("-jar");

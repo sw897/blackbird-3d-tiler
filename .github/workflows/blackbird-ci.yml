@@ -48,7 +48,7 @@ jobs:
 
       - name: Smoke-test executable JAR
         run: |
-          java -jar mago-tiler/dist/mago-3d-tiler-*.jar --help | tee build/jar-help.log
+          java -jar mago-tiler/dist/blackbird-3d-tiler-*.jar --help | tee build/jar-help.log
           grep -q '^Usage:' build/jar-help.log
 
       - name: Upload executable JAR
@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: blackbird-3d-tiler-jar-${{ github.run_id }}-${{ github.run_attempt }}
-          path: mago-tiler/dist/mago-3d-tiler-*.jar
+          path: mago-tiler/dist/blackbird-3d-tiler-*.jar
           if-no-files-found: error
           compression-level: 0
           retention-days: 7
